@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- glib-compile-resources resources.gresource.xml -->
 <gresources>
     <gresource prefix="/org/example/myapp">
         <file compressed="true" preprocess="xml-stripblanks" alias="window.ui">resources/ui/window.ui</file>
