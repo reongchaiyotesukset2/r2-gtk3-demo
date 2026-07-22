@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.96.1 -->
+<interface>
+  <!-- interface-name window.ui -->
+  <requires lib="gtk" version="4.12"/>
+  <requires lib="libadwaita" version="1.0"/>
+  <template class="Window" parent="AdwApplicationWindow">
+    <property name="default-height">600</property>
+    <property name="default-width">400</property>
+    <property name="destroy-with-parent">True</property>
+    <property name="hide-on-close">True</property>
+    <property name="resizable">False</property>
+    <property name="show-menubar">True</property>
+    <property name="title">testWindows</property>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="AdwToolbarView"/>
+        </child>
+        <child>
+          <object class="AdwHeaderBar"/>
+        </child>
+        <child>
+          <object class="GtkButton" id="button_clicked1">
+            <property name="action-name">app.test1</property>
+            <property name="label">Click</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

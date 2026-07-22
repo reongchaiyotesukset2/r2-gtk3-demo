@@ -1,0 +1,28 @@
+[package]
+name = "r2-gtk3-demo"
+version = "0.1.0"
+edition = "2026"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+#gtk = {package = "gtk4", version = "0.8.1", features = ["v4_8"]}
+gtk = {package = "gtk4", version = "0.10", features = ["v4_10"]}
+adw = {package = "libadwaita", version = "0.8", features = ["v1_6"]}
+
+glib =  "0.21.1"
+gio =  "0.21.1"
+once_cell = "1.19.0"
+anyhow = "1.0"
+tracing = {version = "0.1", default-features = false}
+gettext-rs = {version = "0.7", features = ["gettext-system"]}
+image = {version = "0.25", default-features = false, features = ["png"]}
+rqrr = { version = "0.10", default-features = false, features = ["img"] }
+
+diesel = {version = "2.0", features = ["sqlite", "r2d2"]}
+diesel_migrations = {version = "2.0", features = ["sqlite"]}
+percent-encoding = "2.3"
+serde = "1.0"
+ring = "0.17"
+zeroize = {version = "1", features = ["zeroize_derive"]}
+url = "2.5"
