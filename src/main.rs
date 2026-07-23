@@ -12,6 +12,6 @@ fn main() {
    let res = gio::Resource::load("data/resources.gresource").expect("Could not load resources!");
    gio::resources_register(&res);
 
-   glib::set_application_name("r2-gtk4");
+   glib::set_application_name("r2-gtk3-demo");
    Application::run();   
 }

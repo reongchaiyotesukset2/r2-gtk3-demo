@@ -1,8 +1,8 @@
 mod window;
-//mod preferences;
+mod preferences;
 
 
 pub use self::{
     window::Window,
-    //preferences::PreferencesWindow,
+    preferences::PreferencesWindow,
 };

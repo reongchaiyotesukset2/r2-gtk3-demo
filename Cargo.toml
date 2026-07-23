@@ -1,17 +1,15 @@
 [package]
 name = "r2-gtk3-demo"
 version = "0.1.0"
-edition = "2026"
+edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-#gtk = {package = "gtk4", version = "0.8.1", features = ["v4_8"]}
-gtk = {package = "gtk4", version = "0.10", features = ["v4_10"]}
-adw = {package = "libadwaita", version = "0.8", features = ["v1_6"]}
+gtk =  "0.18.2"
 
-glib =  "0.21.1"
-gio =  "0.21.1"
+glib =  "0.18.2"
+gio =  "0.18.2"
 once_cell = "1.19.0"
 anyhow = "1.0"
 tracing = {version = "0.1", default-features = false}

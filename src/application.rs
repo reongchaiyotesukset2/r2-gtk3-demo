@@ -6,7 +6,7 @@ use gtk::{
     prelude::*,
 };
 use crate::{
-    widgets::{Window},
+    widgets::{Window,PreferencesWindow},
     models::{ProvidersModel},
 };
 use crate::config;
@@ -51,26 +51,26 @@ mod imp {
                 let app = self.obj();
 
 
-            
+                let button1_action = gio::ActionEntry::builder("button1")
+                .activate(|app: &Self::Type, _, _| {
+
+                  let window = app.active_window();
+                  let preferences = PreferencesWindow::default();
+                  preferences.present();
+
+                }).build();
+
+
                     let quit_action = gio::ActionEntry::builder("quit")
                   .activate(|app: &Self::Type, _, _| {
                     app.quit()  
                   })
                   .build();
 
-
-
-
                     app.add_action_entries([
                         quit_action,
+                        button1_action,
                     ]);
-
-                   let _quit_action = app.lookup_action("quit").unwrap();
-
-
-
-
-
             }
             
             fn activate(&self) {
@@ -80,7 +80,6 @@ mod imp {
                 window.present();
                 self.window.replace(Some(window.downgrade()));
 
-                app.set_accels_for_action("app.preferences", &["<primary>comma"]);
             }
             fn open(&self, _files: &[gio::File], _hint: &str) 
             {
@@ -114,18 +113,9 @@ impl Application {
             .build();
             app.imp().model.load();
         app.run()
-        
-
       
     }
-  pub fn test2(){
-    println!("test2!!!!!");
-    
-  }
-  pub fn test1(&self){
-    println!("test1!!!!!!");
 
-  }
   pub fn active_window(&self) -> Window {
         self.imp()
             .window
@@ -135,6 +125,4 @@ impl Application {
             .upgrade()
             .unwrap()
     }
-
-
 }
