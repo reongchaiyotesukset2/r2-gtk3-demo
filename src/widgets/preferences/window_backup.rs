@@ -1,18 +1,24 @@
-use std::cell::Cell;
 use std::cell::OnceCell;
+use gettextrs::gettext;
+use anyhow::Result;
+
+
 use gtk::{
     gio,
-    glib::{self,clone},
+    glib::{self},
     subclass::prelude::*,
     prelude::*,
 };
+
 use crate::{
     application::Application,config,
-    models::{ProvidersModel},
+    models::{ProvidersModel,OTPUri},
 };
 mod imp {
 
+
     use super::*;
+
 
     #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
     #[template(resource = "/org/example/myapp/preferences.ui")]
@@ -21,30 +27,12 @@ mod imp {
     pub struct PreferencesWindow {
         #[property(get, set, construct_only)]
         pub model: OnceCell<ProvidersModel>,
-        #[property(get, set, construct)]
-        pub has_set_password: Cell<bool>,
         #[template_child]
-        pub txtusername : TemplateChild<gtk::Entry>,
+        pub button_clicked1 : TemplateChild<gtk::Button>,
     }
-/*
- * #[glib::object_subclass]
- impl ObjectSubclass for PreferencesWindow {
 
- const NAME: &'static str = "PreferencesWindow";
- type Type = super::PreferencesWindow;
- type ParentType = gtk::ApplicationWindow;
- type Interfaces = (gio::Initable,);
 
- fn class_init(klass: &mut Self::Class) {
- Self::bind_template(klass);
-}
-fn instance_init(obj: &glib::subclass::InitializingObject<Self>) {
 
-obj.init_template();
-}
-
-}
- */
     #[glib::object_subclass]
     impl ObjectSubclass for PreferencesWindow {
 
@@ -55,12 +43,10 @@ obj.init_template();
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
-
         }
         fn instance_init(obj: &glib::subclass::InitializingObject<Self>) {
 
             obj.init_template();
-
         }
 
     }
@@ -78,10 +64,24 @@ obj.init_template();
     }
 
     impl  WidgetImpl for PreferencesWindow {}
-    impl  WindowImpl for PreferencesWindow {}
-    impl  BinImpl  for PreferencesWindow {}
+    impl  WindowImpl for PreferencesWindow {
+
+        fn enable_debugging(&self, toggle: bool) -> bool {
+            if config::PROFILE != "Devel" {
+
+                false
+            } else {
+                self.parent_enable_debugging(toggle)
+            }
+        }
+
+
+
+    }
     impl  ApplicationWindowImpl for PreferencesWindow {}
+    impl  BinImpl for PreferencesWindow {}
     impl ContainerImpl for PreferencesWindow {}
+
     impl InitableImpl for PreferencesWindow {
         fn init(&self, _cancellable: Option<&gio::Cancellable>) -> Result<(), glib::Error> {
 
@@ -97,7 +97,7 @@ obj.init_template();
 glib::wrapper! {
     pub struct PreferencesWindow(ObjectSubclass<imp::PreferencesWindow>)
     @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow,
-    @implements gio::Initable, gio::ActionMap, gio::ActionGroup;
+    @implements gio::Initable,gio::ActionMap, gio::ActionGroup;
 }
 
 impl PreferencesWindow {
@@ -110,9 +110,3 @@ impl PreferencesWindow {
     }
 
 }
-impl Default for PreferencesWindow {
-    fn default() -> Self {
-        glib::Object::new()
-    }
-}
-

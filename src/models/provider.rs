@@ -65,7 +65,6 @@ glib::wrapper! {
 impl Provider {
     pub fn load()-> Result<(), Box<dyn std::error::Error>> {
         println!("load on provider on provider.rs");
-
         use crate::schema::providers::dsl::*;
         let db = database::connection();
         let mut _conn = db.get()?;
