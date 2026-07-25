@@ -6,7 +6,7 @@ use gtk::{
     prelude::*,
 };
 use crate::{
-    widgets::{Window,PreferencesWindow},
+    widgets::{Window,PreferencesWindow,ProvidersDialog},
     models::{ProvidersModel},
 };
 use crate::config;
@@ -63,6 +63,16 @@ mod imp {
 
                 }).build();
 
+                let button2_action = gio::ActionEntry::builder("button2")
+                .activate(|app: &Self::Type, _, _| {
+
+                  let model = &app.imp().model;
+                  let window = app.active_window();
+                  let providers = ProvidersDialog::new(model);
+                  providers.present();
+
+                }).build();
+
 
                     let quit_action = gio::ActionEntry::builder("quit")
                   .activate(|app: &Self::Type, _, _| {
@@ -73,6 +83,7 @@ mod imp {
                     app.add_action_entries([
                         quit_action,
                         button1_action,
+                        button2_action,
                     ]);
             }
             

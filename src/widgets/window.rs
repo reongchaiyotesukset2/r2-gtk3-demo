@@ -27,8 +27,7 @@ mod imp {
     pub struct Window {
         #[property(get, set, construct_only)]
         pub model: OnceCell<ProvidersModel>,
-        #[template_child]
-        pub button_clicked1 : TemplateChild<gtk::Button>,
+
     }
 
 
