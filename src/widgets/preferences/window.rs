@@ -8,7 +8,6 @@ use gtk::{
 };
 use crate::{
     application::Application,config,
-    models::{ProvidersModel},
 };
 mod imp {
 
@@ -19,40 +18,30 @@ mod imp {
     #[properties(wrapper_type = super::PreferencesWindow)]
 
     pub struct PreferencesWindow {
-        #[property(get, set, construct_only)]
-        pub model: OnceCell<ProvidersModel>,
+         pub actions: gio::SimpleActionGroup,
         #[property(get, set, construct)]
         pub has_set_password: Cell<bool>,
         #[template_child]
         pub txtusername : TemplateChild<gtk::Entry>,
     }
-/*
- * #[glib::object_subclass]
- impl ObjectSubclass for PreferencesWindow {
 
- const NAME: &'static str = "PreferencesWindow";
- type Type = super::PreferencesWindow;
- type ParentType = gtk::ApplicationWindow;
- type Interfaces = (gio::Initable,);
-
- fn class_init(klass: &mut Self::Class) {
- Self::bind_template(klass);
-}
-fn instance_init(obj: &glib::subclass::InitializingObject<Self>) {
-
-obj.init_template();
-}
-
-}
- */
     #[glib::object_subclass]
     impl ObjectSubclass for PreferencesWindow {
 
         const NAME: &'static str = "PreferencesWindow";
         type Type = super::PreferencesWindow;
         type ParentType = gtk::ApplicationWindow;
-        type Interfaces = (gio::Initable,);
+        //type Interfaces = (gio::Initable,);
 
+        fn new() -> Self {
+            let actions = gio::SimpleActionGroup::new();
+            Self {
+                actions,
+                has_set_password: Cell::default(), // Synced from the application
+                txtusername: TemplateChild::default(),
+
+            }
+        }
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
 
@@ -101,15 +90,17 @@ glib::wrapper! {
 }
 
 impl PreferencesWindow {
-    pub fn new(model: &ProvidersModel, app: &Application) -> Self {
+    /*pub fn new(model: &ProvidersModel, app: &Application) -> Self {
         gio::Initable::builder()
         .property("application", app)
         .property("model", model)
         .build(gio::Cancellable::NONE)
         .unwrap()
     }
+    */
 
 }
+
 impl Default for PreferencesWindow {
     fn default() -> Self {
         glib::Object::new()
