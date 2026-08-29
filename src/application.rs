@@ -22,7 +22,7 @@ mod imp {
   
   pub struct Application {
        pub window: RefCell<Option<glib::WeakRef<Window>>>, //disable code
-       //pub window: RefCell<Option<glib::WeakRef<PreferencesWindow>>>, //test PreferencesWindow
+      
         pub model: ProvidersModel,
         #[property(get, set, construct)]
         pub is_locked: Cell<bool>,
@@ -55,7 +55,7 @@ mod imp {
                 let button1_action = gio::ActionEntry::builder("button1")
                 .activate(|app: &Self::Type, _, _| {
 
-                  let window = app.active_window();
+                
                   let preferences = PreferencesWindow::default();
                   preferences.set_has_set_password(app.can_be_locked());
 
@@ -67,7 +67,7 @@ mod imp {
                 .activate(|app: &Self::Type, _, _| {
 
                   let model = &app.imp().model;
-                  let window = app.active_window();
+  
                   let providers = ProvidersDialog::new(model);
                   providers.present();
 
@@ -93,13 +93,7 @@ mod imp {
                 let window = Window::new(&self.model, &app);  //รับมาโดยตรงจาก Window
                 window.present();
                 self.window.replace(Some(window.downgrade()));
-              /*
-               let app = self.obj();
-               let app = self.obj();
-               let window = PreferencesWindow::new(&self.model, &app);  //รับมาโดยตรงจาก Window
-               window.present();
-               self.window.replace(Some(window.downgrade()));
-*/
+              
             }
             fn open(&self, _files: &[gio::File], _hint: &str) 
             {
@@ -121,7 +115,7 @@ glib::wrapper! {
 impl Application {
     
     pub fn run() -> glib::ExitCode  {
-     println!("run!!!!!!!!!!!!");
+  
     
      tracing::info!("Authenticator ({})", config::APP_ID);
      tracing::info!("Version: {} ({})", config::VERSION, config::PROFILE);
