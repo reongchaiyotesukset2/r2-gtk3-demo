@@ -90,15 +90,6 @@ glib::wrapper! {
 }
 
 impl PreferencesWindow {
-    /*pub fn new(model: &ProvidersModel, app: &Application) -> Self {
-        gio::Initable::builder()
-        .property("application", app)
-        .property("model", model)
-        .build(gio::Cancellable::NONE)
-        .unwrap()
-    }
-    */
-
 }
 
 impl Default for PreferencesWindow {
